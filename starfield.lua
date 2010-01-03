@@ -2,7 +2,7 @@ require "helpers"
 
 starfield = {
   -- how many stars should be displayed on the screen?
-  numStars = 100,
+  numStars = 20,
   minSpeed = 2,
   maxSpeed = 5,
   minWidth = 20,
@@ -17,7 +17,7 @@ starfield = {
     self.__index = self
     self.stars = display.newGroup()
     self:setupStars()
---    self:setupTimer()
+    self:setupTimer()
     return o
   end,
 
@@ -45,7 +45,6 @@ starfield = {
     local x, y = helpers.outOfSightTop(star)
     star.x = x
     star.y = y
-    helpers.clamp(star)
     star.alpha = math.random()
     star.alpha = star.alpha < 0.2 and 0.2 or star.alpha
     star.alpha = star.alpha > 0.7 and 0.7 or star.alpha
@@ -53,6 +52,7 @@ starfield = {
     star:setFillColor(helpers.randomRGB())
     local _, endY = helpers.outOfSightBottom(star)
 
+--[[
     transition.to(star, {
       time=helpers.height / star.speed * helpers.fps,
       y=endY,
@@ -60,11 +60,11 @@ starfield = {
         self:resetStar(star) 
       end
     })
+--]]
     return star
   end,
---[[
+
   enterFrame = function(self, event)
-    print(3223)
     for i=1, self.stars.numChildren do
       local star = self.stars[i]
       star:translate(0, star.speed)
@@ -75,7 +75,7 @@ starfield = {
   end,
 
   setupTimer = function(self)
-  --  Runtime:addEventListener("enterFrame", self)
+    Runtime:addEventListener("enterFrame", self)
     for i=1, self.stars.numChildren do
       local star = self.stars[i]
       star:translate(0, star.speed)
@@ -84,10 +84,9 @@ starfield = {
       end
     end
   end,
-]]--
 
   cleanup = function(self)
---    Runtime:removeEventListener("enterFrame", self)
+    Runtime:removeEventListener("enterFrame", self)
     helpers.cleanup(self.stars)
   end
 }

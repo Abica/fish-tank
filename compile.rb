@@ -51,9 +51,4 @@ if File.exists?( "images" )
   `cp images/* #{ appdir }/`
 end
 
-if File.exists?( "fishies" )
-  puts "* copying fishies"
-  `cp fishies/*png #{ appdir }/`
-end
-
 puts "Done"

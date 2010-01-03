@@ -1,11 +1,29 @@
 require "helpers"
 fish = {
-  new = function(image)
-    local fishy = display.newImage(image)
-    fishy.dx, fishy.dy = math.random(3), math.random(3)
+  new = function(imageA, imageB)
+    local fishy = display.newGroup()
+    local fishyLeft = display.newImage(imageA)
+    local fishyRight = display.newImage(imageB)
+    fishy:insert(fishyLeft)
+    fishy:insert(fishyRight)
+
+    fishy.dx = math.random(3)
+    fishy.dy = math.random(3)
+    fish.flip(fishy)
+
     fishy.x, fishy.y = helpers.randomPos(fishy)
     helpers.clamp(fishy)
     return fishy
+  end,
+
+  flip = function(o)
+    if o.dy > 0 then
+      o[1].isVisible = false
+      o[2].isVisible = true
+    else
+      o[1].isVisible = true
+      o[2].isVisible = false
+    end
   end
 }
 
