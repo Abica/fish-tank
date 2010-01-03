@@ -38,11 +38,11 @@ helpers = {
   -- TODO: this should take a bounding box to clamp to
   clamp = function(o)
     local h = helpers
-    local height = o.height / 2
-    local width = o.width / 2
-    local top = h.top + height
+    local height = o.height
+    local width = o.width
+    local top = h.top-- + height
     local down = h.height - height
-    local left = h.left + width
+    local left = h.left-- + width
     local right = h.width - width
 
     if o.y < top then
@@ -64,8 +64,8 @@ helpers = {
 
   inXBounds = function(o)
     local h = helpers
-    local width = o.width / 2
-    local left = h.left + width
+    local width = o.width
+    local left = h.left-- + width
     local right = h.width - width
 
     return( o.x >= left and o.x <= right  ) 
@@ -73,8 +73,8 @@ helpers = {
 
   inYBounds = function(o)
     local h = helpers
-    local height = o.height / 2
-    local top = h.top + height
+    local height = o.height
+    local top = h.top-- + height
     local down = h.height - height
 
     return( o.y >= top and o.y <= down )
