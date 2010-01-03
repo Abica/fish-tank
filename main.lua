@@ -40,7 +40,7 @@ Runtime:addEventListener("enterFrame", function()
     if not helpers.inYBounds(fishy) then
       fishy.dy = fishy.dy * -1
     end
-    helpers.clampInBounds(fishy)
+    helpers.clamp(fishy)
   end
 end)
 
