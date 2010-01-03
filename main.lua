@@ -11,7 +11,7 @@ local game = {
 
 --media.playSound("bg.mp3")
 -- draws a layered starfield
-local stars = starfield:new({numStars = 4})
+local stars = starfield:new()
 
 local scenes = display.newGroup()
 local enemies = display.newGroup()

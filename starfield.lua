@@ -2,7 +2,7 @@ require "helpers"
 
 starfield = {
   -- how many stars should be displayed on the screen?
-  numStars = 20,
+  numStars = 100,
   minSpeed = 2,
   maxSpeed = 5,
   minWidth = 20,

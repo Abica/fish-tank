@@ -53,7 +53,7 @@ end
 
 if File.exists?( "fishies" )
   puts "* copying fishies"
-  `cp fishies/* #{ appdir }/`
+  `cp fishies/*png #{ appdir }/`
 end
 
 puts "Done"

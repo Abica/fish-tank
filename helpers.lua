@@ -38,10 +38,12 @@ helpers = {
   -- TODO: this should take a bounding box to clamp to
   clamp = function(o)
     local h = helpers
-    local top = h.top
-    local left = h.left
-    local right = h.width - o.width / 2
-    local down = h.height - o.height / 2
+    local height = o.height / 2
+    local width = o.width / 2
+    local top = h.top + height
+    local down = h.height - height
+    local left = h.left + width
+    local right = h.width - width
 
     if o.y < top then
       o.y = top
