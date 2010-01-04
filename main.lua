@@ -9,7 +9,7 @@ local game = {
   over = true
 }
 
---media.playSound("bg.mp3")
+--media.playSound("bubbles.wav")
 -- draws a layered starfield
 local stars = starfield:new()
 
@@ -29,6 +29,10 @@ local fishies = {
   fish.new("fish8.png", "fish8b.png"),
   fish.new("fish9.png", "fish9b.png")
 }
+
+Runtime:addEventListener("accelerometer", function(event)
+  
+end)
 
 Runtime:addEventListener("enterFrame", function()
   for i, fishy in ipairs(fishies) do

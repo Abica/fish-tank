@@ -2,13 +2,15 @@ require "helpers"
 
 starfield = {
   -- how many stars should be displayed on the screen?
-  numStars = 20,
-  minSpeed = 2,
-  maxSpeed = 5,
-  minWidth = 20,
-  maxWidth = 200,
+  numStars = 10,
+  minSpeed = 3,
+  maxSpeed = 10,
+  minWidth = 300,
+  maxWidth = 800,
   minHeight = 20,
   maxHeight = 100,
+  minAlpha = 0.5,
+  maxAlpha = 0.9,
   stars = nil,
 
   new = function(self, o)
@@ -46,8 +48,8 @@ starfield = {
     star.x = x
     star.y = y
     star.alpha = math.random()
-    star.alpha = star.alpha < 0.2 and 0.2 or star.alpha
-    star.alpha = star.alpha > 0.7 and 0.7 or star.alpha
+    star.alpha = star.alpha < self.minAlpha and self.minAlpha or star.alpha
+    star.alpha = star.alpha > self.maxAlpha and self.maxAlpha or star.alpha
     star.speed = math.random(self.minSpeed, self.maxSpeed)
     star:setFillColor(helpers.randomRGB())
     local _, endY = helpers.outOfSightBottom(star)

@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 main_file = IO.read("main.lua")
 app_name = Dir.pwd[ /([^\/]+)\/?$/ ]
 build_dir = "build"
@@ -43,6 +44,11 @@ end
 puts "* writing #{ app_main_file }"
 open( app_main_file , "w+" ) do | file |
   file.write( main_file )
+end
+
+if File.exists?( "sounds" )
+  puts "* copying sounds"
+  `cp sounds/* #{ app_dir }/`
 end
 
 if File.exists?( "images" )
