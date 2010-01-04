@@ -113,15 +113,26 @@ helpers = {
     return o
   end,
 
+  toggleVisibility = function(...)
+    for i, o in pairs(arg) do
+      print(i,o)
+      if o then
+        o.isVisible = not o.isVisible
+        print( o.isVisible )
+      end
+    end
+  end,
+
   -- nils out all attributes and removes them from the display hierarchy 
   cleanup = function(o)
     for k, v in ipairs(o) do
       o[k] = nil
     end 
 
-    for i=o.numChildren, 1, -1 do 
+    for i=o.numChildren or #o, 1, -1 do 
       local child = o[i] 
       helpers.try(child.cleanup)
+      helpers.cleanup(child)
       child.parent:remove(child) 
     end 
   end

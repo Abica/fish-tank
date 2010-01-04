@@ -7,8 +7,10 @@ fish = {
     fishy:insert(fishyLeft)
     fishy:insert(fishyRight)
 
-    fishy.dx = math.random(3)
-    fishy.dy = math.random(3)
+    fishy.dx = math.random(3) + 2
+    fishy.dy = math.random(3) + 2
+    fishy.old_dx = fishy.dx
+    fishy.old_dy = fishy.dy
     fish.flip(fishy)
 
     fishy.x, fishy.y = helpers.randomPos(fishy)

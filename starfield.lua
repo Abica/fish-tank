@@ -2,11 +2,11 @@ require "helpers"
 
 starfield = {
   -- how many stars should be displayed on the screen?
-  numStars = 10,
-  minSpeed = 3,
-  maxSpeed = 10,
-  minWidth = 300,
-  maxWidth = 800,
+  numStars = 5,
+  minSpeed = 10,
+  maxSpeed = 20,
+  minWidth = 400,
+  maxWidth = 2000,
   minHeight = 20,
   maxHeight = 100,
   minAlpha = 0.5,
@@ -33,7 +33,8 @@ starfield = {
   -- creates a new star and places it at a random x axis just off of the top of the screen
   addStar = function(self)
     local width = math.random(self.minWidth, self.maxWidth)
-    local star = display.newCircle(0, 0, width / 2)
+    local x, y = helpers.randomPos(star)
+    local star = display.newCircle(x, y, width / 2)
     --local star = display.newImage("star.png")
 --    local star = display.newRect(0, 0, width, width)
     self:resetStar(star)
