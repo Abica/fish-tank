@@ -6,7 +6,7 @@ display.setStatusBar(display.HiddenStatusBar)
 -- holds game state
 local game = {
   paused = false,
-  over = true,
+  over = false,
   level = 1
 }
 
@@ -16,9 +16,11 @@ local stars = starfield:new()
 
 local scenes = display.newGroup()
 local bg = display.newGroup()
-bg:insert(display.newImage("bg.png"))
+bg:insert(display.newImage("paused.png"))
 bg:insert(display.newImage("bg_dark.png"))
+bg:insert(display.newImage("gameover.png"))
 bg[1].isVisible = false
+bg[3].isVisible = false
 
 local player = fish.new("fish.png", "fishb.png")
 player.isPlayer = true
@@ -34,9 +36,15 @@ local fishies = {
   fish.new("fish8.png", "fish8b.png"),
 --  fish.new("fish9.png", "fish9b.png")
 }
+local score = display.newText( "Score 0", helpers.width, helpers.top, nil, 32 ) 
+score:rotate(90)
+score:setTextColor( 255,255,255 ) 
 
 local events = {
   resetGame = function()
+    bg[1].isVisible = false
+    bg[2].isVisible = true
+    bg[3].isVisible = false
     for i, fishy in ipairs(fishies) do
       fishy.isVisible = true
       fishy.isHitTestable = true
@@ -96,6 +104,7 @@ local listeners = {
         else
           helpers.move(fishy)
           if helpers.touching(player, fishy) then
+            player.lives = player.lives - 1
             if player.lives > 0 then
               transition.to(player, {alpha=0, time=1000})
               transition.to(player, {alpha=1, delay=1000, time=1000})
@@ -104,12 +113,19 @@ local listeners = {
                 player.isHitTestable = true
               end)
             else
-              game.paused = true
+
+              bg[1].isVisible = false
+              bg[2].isVisible = false
+              bg[3].isVisible = true
               game.over = true
               player.inTank = not player.inTank
-              helpers.toggleVisibility(bg[1], bg[2])
+              --helpers.toggleVisibility(bg[1], bg[2])
+              
+
+--              local textObject = display.newText( "Game Over!", x, y, nil, 32 ) 
+ --             textObject:rotate(90)
+  --            textObject:setTextColor( 255,255,255 ) 
             end
-            player.lives = player.lives - 1
           end
           if not helpers.inXBounds(fishy) then
             fishy.dx = fishy.dx * -1
@@ -118,6 +134,7 @@ local listeners = {
             fishy.x, fishy.y = helpers.outOfSightBottom(fishy)
             helpers.clampX(fishy)
             game.level = game.level + 1
+            score.text = "Score " .. game.level
           end
         end
       end
@@ -135,29 +152,40 @@ local listeners = {
 Runtime:addEventListener("accelerometer", listeners.accelerometer)
 Runtime:addEventListener("enterFrame", listeners.enterFrame)
 Runtime:addEventListener("tap", function(event)
-  player.dx, player.old_dx = player.old_dx, player.dx
-  player.dy, player.old_dy = player.old_dy, player.dy
-  if game.paused then
-    Runtime:removeEventListener("enterFrame", listeners.enterFrame)
-    for i, fishy in ipairs(fishies) do
-      fishy.x = fishy.old_x
-      fishy.y = fishy.old_y
-      fishy.dx = fishy.old_dx
-      fishy.dy = fishy.old_dy
-      fish.flip(fishy)
-    end
+  if game.over then
+    events.resetGame()
+    game.over = false
+    game.paused = false
   else
-    Runtime:addEventListener("enterFrame", listeners.enterFrame)
-    for i, fishy in ipairs(fishies) do
-      fishy.old_x = fishy.x
-      fishy.old_y = fishy.y
-      fishy.old_dx = fishy.dx
-      fishy.old_dy = fishy.dy
+    player.dx, player.old_dx = player.old_dx, player.dx
+    player.dy, player.old_dy = player.old_dy, player.dy
+    if game.paused then
+      Runtime:removeEventListener("enterFrame", listeners.enterFrame)
+      for i, fishy in ipairs(fishies) do
+        fishy.x = fishy.old_x
+        fishy.y = fishy.old_y
+        fishy.dx = fishy.old_dx
+        fishy.dy = fishy.old_dy
+        fish.flip(fishy)
+      end
+      bg[1].isVisible = false
+      bg[2].isVisible = true
+      bg[3].isVisible = false
+    else
+      Runtime:addEventListener("enterFrame", listeners.enterFrame)
+      for i, fishy in ipairs(fishies) do
+        fishy.old_x = fishy.x
+        fishy.old_y = fishy.y
+        fishy.old_dx = fishy.dx
+        fishy.old_dy = fishy.dy
+      end
+      bg[1].isVisible = true
+      bg[2].isVisible = false
+      bg[3].isVisible = false
     end
   end
   player.inTank = not player.inTank
   game.paused = not game.paused
-  helpers.toggleVisibility(bg[1], bg[2])
 end)
 
 Runtime:addEventListener("system", listeners.system) 
