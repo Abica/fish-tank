@@ -9,8 +9,8 @@ starfield = {
   maxWidth = 2000,
   minHeight = 20,
   maxHeight = 100,
-  minAlpha = 0.3,
-  maxAlpha = 0.6,
+  minAlpha = 0.9,
+  maxAlpha = 1,
   stars = nil,
 
   new = function(self, o)
