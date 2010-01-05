@@ -36,12 +36,17 @@ local fishies = {
   fish.new("fish8.png", "fish8b.png"),
 --  fish.new("fish9.png", "fish9b.png")
 }
-local score = display.newText( "Score 0", helpers.width, helpers.top, nil, 32 ) 
+local score = display.newText( "Score 0", helpers.width - 75, helpers.top + 50, nil, 32 ) 
 score:rotate(90)
 score:setTextColor( 255,255,255 ) 
 
 local events = {
   resetGame = function()
+    game.paused = false
+    game.over = false
+    game.level = 0
+    game.score = 0
+    score.text = "Score " .. game.score
     bg[1].isVisible = false
     bg[2].isVisible = true
     bg[3].isVisible = false
@@ -57,7 +62,7 @@ local events = {
         fishy.speed = 5
         fishy.x, fishy.y = helpers.outOfSightBottom(fishy)
         fishy.dy = fishy.dy * -1
-        fishy.y = fishy.y + fishy.height * i * 2
+--        fishy.y = fishy.y + fishy.height * i * 2
         helpers.clampX(fishy)
 
         fish.flip(fishy)
@@ -118,6 +123,8 @@ local listeners = {
               bg[2].isVisible = false
               bg[3].isVisible = true
               game.over = true
+
+              score.isVisible = false
               player.inTank = not player.inTank
               --helpers.toggleVisibility(bg[1], bg[2])
               
@@ -134,7 +141,8 @@ local listeners = {
             fishy.x, fishy.y = helpers.outOfSightBottom(fishy)
             helpers.clampX(fishy)
             game.level = game.level + 1
-            score.text = "Score " .. game.level
+            game.score = game.score + 2
+            score.text = "Score " .. game.score
           end
         end
       end
@@ -154,9 +162,8 @@ Runtime:addEventListener("enterFrame", listeners.enterFrame)
 Runtime:addEventListener("tap", function(event)
   if game.over then
     events.resetGame()
-    game.over = false
-    game.paused = false
   else
+    score.isVisible = not score.isVisible
     player.dx, player.old_dx = player.old_dx, player.dx
     player.dy, player.old_dy = player.old_dy, player.dy
     if game.paused then
@@ -180,14 +187,15 @@ Runtime:addEventListener("tap", function(event)
         fishy.old_dy = fishy.dy
         fishy.x, fishy.y = helpers.randomPos()
         helpers.clamp(fishy)
+        fish.flip(fishy)
       end
       bg[1].isVisible = true
       bg[2].isVisible = false
       bg[3].isVisible = false
     end
+    player.inTank = not player.inTank
+    game.paused = not game.paused
   end
-  player.inTank = not player.inTank
-  game.paused = not game.paused
 end)
 
 Runtime:addEventListener("system", listeners.system) 
