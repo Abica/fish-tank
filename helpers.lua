@@ -34,6 +34,22 @@ helpers = {
     return helpers.width / 2, helpers.height / 2
   end,
 
+  clampX = function(o)
+    local h = helpers
+    local height = o.height
+    local width = o.width
+    local left = h.left-- + width
+    local right = h.width - width
+
+    if o.x < left then
+      o.x = left
+    end
+
+    if o.x > right then
+      o.x = right
+    end
+  end,
+
   -- locks object into viewport
   -- TODO: this should take a bounding box to clamp to
   clamp = function(o)
@@ -59,6 +75,28 @@ helpers = {
 
     if o.x > right then
       o.x = right
+    end
+  end,
+
+  touching = function(a, b)
+    if a.isHitTestable and b.isHitTestable then
+      left1 = a.x
+      left2 = b.x
+      right1 = a.x + a.width
+      right2 = b.x + b.width
+      top1 = a.y
+      top2 = b.y
+      bottom1 = a.y + a.height
+      bottom2 = b.y + b.height
+
+      return not (
+        (bottom1 < top2) or
+        (top1 > bottom2) or
+        (right1 < left2) or
+        (left1 > right2)
+      )
+    else
+      return false
     end
   end,
 
@@ -94,14 +132,19 @@ helpers = {
     return x, y
   end,
 
-  -- has o fallen off of the bottom of the screen?
-  withinSight = function(o)
+  -- has o fallen off of the top of the screen?
+  withinSightTop = function(o)
+    return o.y + o.height > helpers.top
+  end,
+
+  -- has o fallen off of the top of the screen?
+  withinSightBottom = function(o)
     return o.y - o.height < helpers.height
   end,
 
   -- try to run a function if it exists
   try = function(...)
-    for i, v in pairs(arg) do
+    for i, v in ipairs(arg) do
       if type(v) == "function" then
         v()
       end
@@ -114,7 +157,7 @@ helpers = {
   end,
 
   toggleVisibility = function(...)
-    for i, o in pairs(arg) do
+    for i, o in ipairs(arg) do
       print(i,o)
       if o then
         o.isVisible = not o.isVisible

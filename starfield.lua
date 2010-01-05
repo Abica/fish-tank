@@ -71,7 +71,7 @@ starfield = {
     for i=1, self.stars.numChildren do
       local star = self.stars[i]
       star:translate(0, star.speed)
-      if not helpers.withinSight(star) then
+      if not helpers.withinSightBottom(star) then
         self:resetStar(star)
       end
     end
@@ -79,13 +79,16 @@ starfield = {
 
   setupTimer = function(self)
     Runtime:addEventListener("enterFrame", self)
+    --[[
     for i=1, self.stars.numChildren do
       local star = self.stars[i]
       star:translate(0, star.speed)
-      if not helpers.withinSight(star) then
+      if not helpers.withinSightBottom(star) then
         self:resetStar(star)
       end
     end
+
+    ]]--
   end,
 
   cleanup = function(self)
