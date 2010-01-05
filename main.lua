@@ -83,7 +83,7 @@ local listeners = {
   end,
 
   enterFrame = function(event)
-    if game.paused then
+    if game.paused or game.over then
       for i, fishy in ipairs(fishies) do
         helpers.move(fishy)
         if not helpers.inXBounds(fishy) then
@@ -178,6 +178,8 @@ Runtime:addEventListener("tap", function(event)
         fishy.old_y = fishy.y
         fishy.old_dx = fishy.dx
         fishy.old_dy = fishy.dy
+        fishy.x, fishy.y = helpers.randomPos()
+        helpers.clamp(fishy)
       end
       bg[1].isVisible = true
       bg[2].isVisible = false
