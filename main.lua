@@ -59,10 +59,9 @@ local events = {
         fishy.dy = fishy.dy * -1
         player.lives = 3
       else
-        fishy.speed = 5
         fishy.x, fishy.y = helpers.outOfSightBottom(fishy)
         fishy.dy = fishy.dy * -1
---        fishy.y = fishy.y + fishy.height * i * 2
+        fishy.y = fishy.y + (fishy.height * (i - 2 ) * 2)
         helpers.clampX(fishy)
 
         fish.flip(fishy)
@@ -75,10 +74,10 @@ events.resetGame()
 
 local listeners = {
   accelerometer = function(event)
-    if not game.paused then
+    if not (game.paused or game.over) then
       local filter = 50
-      local x = (event.xGravity + event.xInstant) * filter
-      local y = -(event.yGravity + event.yInstant) * filter
+      local x = (event.xInstant + event.xInstant) * filter
+      local y = -(event.yInstant + event.yInstant) * filter
       player.dx = event.xInstant 
       player.dy = -event.yInstant 
       fish.flip(player)
