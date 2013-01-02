@@ -1,24 +1,5 @@
-= IDEAS
-2:23:43 AM Nicholas Wright: dude check this
-2:23:53 AM Nicholas Wright: 2 things I need advice on
-2:23:54 AM Nicholas Wright: first
-2:23:54 AM Nicholas Wright: http://www.krazydad.com/bestiary/bestiary_shooter.html
-2:23:58 AM Nicholas Wright: that star field effect
-2:23:59 AM Nicholas Wright: I love it
-2:24:01 AM Nicholas Wright: want to use it
-2:24:02 AM Nicholas Wright: second
-2:24:13 AM nwig: oh, that's pretty sweet
-2:24:20 AM Nicholas Wright: http://www.flyingyogi.com/fun/download.cgi?spritelib
-2:24:22 AM Nicholas Wright: check those
-2:24:33 AM Nicholas Wright: I have all of those completely free that I can use
-2:24:42 AM Nicholas Wright: so I can make a variety of games
-2:24:49 AM Nicholas Wright: I want to use a control style like doodle jump has
-2:24:52 AM Nicholas Wright: where you just tilt it
-2:25:12 AM Nicholas Wright: and I want to use those graphics and a star field effect
-2:25:14 AM Nicholas Wright: ideas?
-2:25:19 AM Nicholas Wright: I considered a racing game
-2:25:31 AM Nicholas Wright: maybe a flying one?
-2:25:32 AM Nicholas Wright: who knows
-2:25:40 AM Nicholas Wright: but I only have 2 days to do this and I need an idea to start lol
-2:25:48 AM Nicholas Wright: I have everything I need but my time is running out
+This was supposed to be a touch based car game for a 48 hour contest but I never really started. Instead I ended up prototyping a little aquarium app with a weird bokah nightlight thing.
 
+I still like the idea but I never developed it into anything beyond the few hours I spent tinkering on it.
+
+It was written for iphone 2.x with the corona platform (www.anscamobile.com). I was using an early beta edition that may not be completely compatible anymore. I haven't run the project since the date of the previous commit, so it may take some porting to run. It shouldn't be too bad.
